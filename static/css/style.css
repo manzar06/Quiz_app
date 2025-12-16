@@ -313,36 +313,41 @@ body {
 
 .history-item {
     background: white;
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     border-radius: 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 1px solid #e0e0e0;
+    gap: 1rem;
 }
 
 .history-score {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.5rem;
+    flex-shrink: 0;
 }
 
 .score-value {
     font-weight: 600;
     color: #333;
     font-size: 1rem;
+    white-space: nowrap;
 }
 
 .score-percentage {
     color: #666;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .history-meta {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    margin-left: auto;
 }
 
 .history-date {
@@ -727,12 +732,17 @@ body {
     .history-item {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
+        gap: 0.75rem;
     }
 
     .history-meta {
         width: 100%;
         justify-content: space-between;
+        margin-left: 0;
+    }
+
+    .history-score {
+        width: 100%;
     }
 
     .result-actions {
