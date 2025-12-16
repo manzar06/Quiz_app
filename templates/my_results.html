@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}My Results - Quiz System{% endblock %}
+
+{% block content %}
+<div class="results-page">
+    <h2>My Quiz Results</h2>
+    {% if results %}
+        <div class="results-table-container">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-book"></i> Quiz</th>
+                        <th><i class="fas fa-star"></i> Score</th>
+                        <th><i class="fas fa-percent"></i> Percentage</th>
+                        <th><i class="fas fa-stopwatch"></i> Time Taken</th>
+                        <th><i class="fas fa-calendar"></i> Completed At</th>
+                        <th><i class="fas fa-eye"></i> Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                        {% set quiz = result.quiz %}
+                        {% set percentage = (result.score / result.total_questions * 100) if result.total_questions > 0 else 0 %}
+                        <tr>
+                            <td>{{ quiz.title }}</td>
+                            <td>{{ result.score }}/{{ result.total_questions }}</td>
+                            <td>
+                                <span class="percentage-badge percentage-{{ 'excellent' if percentage >= 80 else 'good' if percentage >= 60 else 'average' if percentage >= 40 else 'poor' }}">
+                                    {{ "%.1f"|format(percentage) }}%
+                                </span>
+                            </td>
+                            <td>
+                                {% if result.time_taken %}
+                                    {{ result.time_taken // 60 }}:{{ "%02d"|format(result.time_taken % 60) }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>{{ result.completed_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                            <td><a href="{{ url_for('result', result_id=result.id) }}" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i> View</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>You haven't completed any quizzes yet. <a href="{{ url_for('dashboard') }}">Start your first quiz!</a></p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
